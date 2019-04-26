@@ -1,0 +1,16 @@
+atom
+dropbox
+firefox
+google-chrome
+spotify
+virtualbox
+alfred
+flux
+bettertouchtool
+1password
+rescuetime
+freedom
+docker
+gitkraken
+evernote
+typora

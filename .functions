@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Use this to import an existing database to a local database.
+# This relies on the target database being the default one `psql` connects to,
+# which you can control using environment variables, such as:
+#
+# export PGHOST=/path/to/postgres/instance/if/not/default
+# export PGDATABASE=db_name
+#
+# Then, invoke this script with the existing database's URL:
+#
+# $ ./import_db.sh postgresql:///username:password@heroku-postgres-instance.com:5234/myexistingdatabase
+#
+function cpdb() {
+  REMOTE_DB=$1
+
+  read -p "Is this the remote db's URL? $REMOTE_DB [Y/n] " -n 1 yn
+  case $yn in
+    [Y]* ) echo "";;
+    * ) exit;;
+  esac
+
+  pg_dump "$REMOTE_DB" -O -x | psql
+}

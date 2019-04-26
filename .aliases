@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+#-------------------------------------------------------------
+# Commands to open applications
+#-------------------------------------------------------------
+alias subl='open -a "Sublime Text"'
+alias atm='open -a "Atom"'
+alias finder='open -a "Finder"'
+alias stack='/Users/linzjax/.local/bin/stack'
+
+#-------------------------------------------------------------
+# File navigation
+#-------------------------------------------------------------
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias ls='ls -hFG'         # add colors for filetype recognition
+alias l='ls -CF'
+alias ll="ls -alF"
+alias la='ls -Al'          # show hidden files
+alias lk='ls -lSr'         # sort by size, biggest last
+alias lc='ls -ltcr'        # sort by and show change time, most recent last
+alias lu='ls -ltur'        # sort by and show access time, most recent last
+alias lt='ls -ltr'         # sort by date, most recent last
+alias lm='ls -al |more'    # pipe through 'more'
+alias lr='ls -lR'          # recursive ls
+alias tree='tree -Csu'     # nice alternative to 'recursive ls'
+
+#-------------------------------------------------------------
+# tailoring 'less'
+#-------------------------------------------------------------
+alias less='less -R'
+alias more='less'
+export PAGER=less
+
+#-------------------------------------------------------------
+# Misc
+#-------------------------------------------------------------
+# and exclude grepping through .svn folders.
+alias grep='grep --color=always --exclude=\.svn'
+# fixes a conflict with linux users
+alias inotifywait='notifywait'
+# Recursively remove .DS_Store files
+alias cleanupds="find . -type f -name '*.DS_Store' -ls -delete"
+# Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
+# Hide/show all desktop icons (useful when presenting)
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
