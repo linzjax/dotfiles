@@ -95,6 +95,15 @@ function install_dotfiles() {
   ./sync.sh -f
 }
 
+create_ssh_key() {
+  if [ ! -d ~/.ssh ]; then
+    echo "Creating new ssh key"
+    ssh-keygen -t rsa -b 4096 -C "linzjax@gmail.com"
+  else
+    echo "SSH key already setup"
+  fi
+}
+
 function set_defaults() {
   echo "Setting user defaults"
 
@@ -132,6 +141,7 @@ OPTIONS:
   --brew|-b       Install Homebrew, all brew.txt packages and cask.txt
   --dotfiles|-d   Install dotfiles repo or update it
   --defaults|-D   Install default user settings
+  --sshkey| -sk   Create new ssh key
 
 Without any option it runs the complete setup.
 EOF
@@ -144,6 +154,7 @@ UPDATE=0
 BREW=0
 DOTFILES=0
 DEFAULTS=0
+SSHKEY=0
 # translate long options to short
 for arg
 do
@@ -154,6 +165,7 @@ do
     --brew) args="${args}-b ";;
     --dotfiles) args="${args}-d ";;
     --defaults) args="${args}-D ";;
+    --sshkey) args="${args}-sk";;
     # pass through anything else
     *) [[ "${arg:0:1}" == "-" ]] || delim="\""
       args="${args}${delim}${arg}${delim} ";;
@@ -169,6 +181,7 @@ while getopts ":ubfdDt" opt; do
     b)  BREW=1 ;;
     d)  DOTFILES=1 ;;
     D)  DEFAULTS=1 ;;
+    sk) SSHKEY=1 ;;
     \?) usage ;;
     :)
       echo "option -$OPTARG requires an argument"
@@ -183,6 +196,7 @@ if [ -z "$args" ]; then
   BREW=1
   DOTFILES=1
   DEFAULTS=1
+  SSHKEY=1
 fi
 
 if [ $UPDATE == 1 ]; then check_macos_updated; fi
@@ -190,3 +204,4 @@ if [ $BREW == 1 ]; then install_brew; fi
 if [ $BREW == 1 ]; then install_brew_packages; fi
 if [ $DOTFILES == 1 ]; then install_dotfiles; fi
 if [ $DEFAULTS == 1 ]; then set_defaults; fi
+if [ $SSHKEY == 1 ]; then create_ssh_key; fi
