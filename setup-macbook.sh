@@ -96,7 +96,7 @@ function install_dotfiles() {
 }
 
 create_ssh_key() {
-  if [ ! -d ~/.ssh ]; then
+  if [ ! -f ~/.ssh/environment ]; then
     echo "Creating new ssh key"
     ssh-keygen -t rsa -b 4096 -C "linzjax@gmail.com"
   else
