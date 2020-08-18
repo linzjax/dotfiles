@@ -7,8 +7,13 @@ export PATH="/usr/local/bin:$PATH"
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.{bash_prompt,env,aliases,functions,git-completion,git-integration,git-prompt}; do
+for file in ~/.{bash_prompt,env,aliases,functions}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
+done;
+unset file;
+
+for file in ~/.{git-completion.sh,git-integration.sh,git-prompt.sh}; do
+    [ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
 
