@@ -22,3 +22,28 @@ function cpdb() {
 
   pg_dump "$REMOTE_DB" -O -x | psql
 }
+
+function start-docker() {
+  docker-machine start
+  eval "$(docker-machine env default)"
+  echo "Docker reporting for duty!"
+}
+
+function stop-docker() {
+  docker-machine stop
+  echo "Say goodnight Docker! 'Goodnight Docker!'"
+}
+
+function eval-docker() {
+  eval "$(docker-machine env default)"
+}
+
+function bastion() {
+  ssh -A ljacks@bastion.primary.com
+}
+
+function tunnel-to-dev () {
+    echo http://$(ipconfig getifaddr en0):9000
+    ssh -nNT -L 0.0.0.0:9000:$(docker-machine ip):3000 $USER@localhost
+}
+
