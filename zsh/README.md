@@ -15,4 +15,11 @@ Then
 brew install npm nvm gh
 ```
 
+Set up github
+```
+gh auth login
+git config --global user.email "linzjax@gmail.com"
+git config --global user.name "Lindsey Jacks"
+```
+
 Note that the __git file needs to live in .zsh/functions/__git
