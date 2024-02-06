@@ -68,8 +68,6 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-export GITHUB_PKG_AUTH_TOKEN=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
-
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
