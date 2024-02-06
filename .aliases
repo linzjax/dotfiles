@@ -4,9 +4,8 @@
 # Commands to open applications
 #-------------------------------------------------------------
 alias subl='open -a "Sublime Text"'
-alias atm='open -a "Atom"'
+alias vs='open -a "Visual Studio Code"'
 alias finder='open -a "Finder"'
-alias stack='/Users/linzjax/.local/bin/stack'
 
 #-------------------------------------------------------------
 # File navigation
@@ -45,5 +44,5 @@ alias cleanupds="find . -type f -name '*.DS_Store' -ls -delete"
 # Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update; sudo gem cleanup'
 # Hide/show all desktop icons (useful when presenting)
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+alias hide-desktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias show-desktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
