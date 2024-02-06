@@ -10,6 +10,30 @@ source $(brew --prefix nvm)/nvm.sh
 echo "Initialising new SSH agent..."
 ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 
+autoload -U add-zsh-hook
+
+load-nvmrc() {
+  local nvmrc_path
+  nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version
+    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+      nvm use
+    fi
+  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
@@ -35,7 +59,6 @@ ZSH_THEME="crunch"
 # see 'man strftime' for details.
 HIST_STAMPS="mm/dd/yyyy"
 
-
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -45,8 +68,11 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-if [[ -a ".nvmrc" ]]
-then
-	nvm install
-	nvm use
-fi
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/ljacks/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/ljacks/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/ljacks/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/ljacks/google-cloud-sdk/completion.zsh.inc'; fi
