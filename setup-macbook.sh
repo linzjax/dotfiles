@@ -55,31 +55,15 @@ function check_macos_updated() {
 function install_brew() {
   if ! command -v brew > /dev/null 2>&1; then
     echo "Installing Brew..."
-    printf "\n\n" | ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    brew tap caskroom/cask
-    brew tap caskroom/versions
+    printf "\n\n"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   else
     echo "Brew already installed."
   fi
 
   # NVM
   echo 'Installing NVM...'
-  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-}
-
-function install_brew_packages() {
-  mode=$1
-  echo "Install new taps from brew.txt"
-  comm -23 \
-    <(sort ~/code/dotfiles/brew.txt) \
-    <(brew ls --full-name) \
-    | xargs brew install
-
-  echo "Install new casks from cask.txt"
-  comm -23 \
-    <(sort ~/code/dotfiles/cask.txt) \
-    <(brew cask ls) \
-    | xargs brew cask install
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh
 }
 
 function install_dotfiles() {
@@ -108,12 +92,6 @@ function set_defaults() {
   echo "Setting user defaults"
 
   ###############################################################################
-  # General                                                                     #
-  ###############################################################################
-
-  defaults write NSGlobalDomain AppleShowScrollBars -string "WhenScrolling"
-
-  ###############################################################################
   # Screen                                                                      #
   ###############################################################################
 
@@ -122,7 +100,8 @@ function set_defaults() {
   defaults write com.apple.screensaver askForPasswordDelay -int 0
 
   # Save screenshots to the desktop
-  defaults write com.apple.screencapture location -string "${HOME}/Desktop"
+  mkdir ~/Desktop/screenshots
+  defaults write com.apple.screencapture location -string "${HOME}/Desktop/screenshots"
 
   # Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
   defaults write com.apple.screencapture type -string "png"
@@ -201,7 +180,6 @@ fi
 
 if [ $UPDATE == 1 ]; then check_macos_updated; fi
 if [ $BREW == 1 ]; then install_brew; fi
-if [ $BREW == 1 ]; then install_brew_packages; fi
 if [ $DOTFILES == 1 ]; then install_dotfiles; fi
 if [ $DEFAULTS == 1 ]; then set_defaults; fi
 if [ $SSHKEY == 1 ]; then create_ssh_key; fi
