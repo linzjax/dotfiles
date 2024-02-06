@@ -15,6 +15,11 @@ Then
 brew install npm nvm gh
 ```
 
+Set up python
+```
+npm cat .
+```
+
 Set up github
 ```
 gh auth login

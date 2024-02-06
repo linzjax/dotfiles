@@ -44,3 +44,9 @@ HIST_STAMPS="mm/dd/yyyy"
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
+
+if [[ -a ".nvmrc" ]]
+then
+	nvm install
+	nvm use
+fi

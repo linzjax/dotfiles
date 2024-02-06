@@ -4,6 +4,8 @@
 # Commands to open applications
 #-------------------------------------------------------------
 alias subl='open -a "Sublime Text"'
+
+alias vs='open -a "Visual Studio Code"'
 alias finder='open -a "Finder"'
 
 #-------------------------------------------------------------
